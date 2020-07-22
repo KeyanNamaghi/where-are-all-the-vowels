@@ -9,11 +9,28 @@ import "./App.css";
 
 const getHighlightedText = (text, isWelsh) => {
   // Split text on highlight term, include term itself into parts, ignore case
+  // â, ê, î, ô, û, ŵ, ŷ
   const vowels = isWelsh
-    ? ["a", "e", "i", "o", "ô", "u", "w", "y", "'"]
+    ? [
+        "a",
+        "â",
+        "e",
+        "ê",
+        "i",
+        "î",
+        "o",
+        "ô",
+        "u",
+        "û",
+        "w",
+        "ŵ",
+        "y",
+        "ŷ",
+        "'"
+      ]
     : ["a", "e", "i", "o", "u", "'"];
   const parts = isWelsh
-    ? text.split(new RegExp(`(a|e|i|o|ô|u|w|y|')`, "gi"))
+    ? text.split(new RegExp(`(a|â|e|ê|i|î|o|ô|u|û|w|ŵ|y|ŷ|')`, "gi"))
     : text.split(new RegExp(`(a|e|i|o|u|')`, "gi"));
   return (
     <span>

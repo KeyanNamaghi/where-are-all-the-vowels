@@ -1,19 +1,11 @@
 import React, { useState } from "react";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
+import randomWords from "random-words";
+import VowelPercentage from "./ConsonantCounter";
+import API from "./Translate";
 
 import "./App.css";
-
-const phrases = {
-  "Bore da": "Good morning",
-  "Prynhawn da": "Good afternoon",
-  "Noswaith dda": "Good evening",
-  "Nos da": "Good night",
-  Helô: "Hello",
-  "Sut mae?": "How are you?",
-  Croeso: "Welcome",
-  "Mae'n bwrw glaw": "It's raining"
-};
 
 const getHighlightedText = (text, isWelsh) => {
   // Split text on highlight term, include term itself into parts, ignore case
@@ -36,23 +28,11 @@ const getHighlightedText = (text, isWelsh) => {
   );
 };
 
-var randomProperty = function() {
-  var keys = Object.keys(phrases);
-  return keys[(keys.length * Math.random()) << 0];
-};
-
-const randomisePhrase = (text, setText) => {
-  let oldText = text;
-  let newText = text;
-  while (newText === oldText) {
-    newText = randomProperty();
-    console.log(newText);
-  }
-  setText(newText);
-};
-
 function App() {
-  const [text, setText] = useState("Croeso");
+  const [search, setSearch] = useState("Welcome");
+  const [text, setText] = useState("Welcome");
+  const [welshText, setWelshText] = useState("Croeso");
+
   return (
     <div className="App">
       <header className="App-header">
@@ -63,23 +43,38 @@ function App() {
                 id="filled-basic"
                 variant="outlined"
                 className="TextField"
-                onChange={event => setText(event.target.value)}
-                value={text}
+                onChange={event => setSearch(event.target.value)}
+                value={search}
               />
               <Button
                 variant="contained"
                 color="primary"
-                onClick={() => randomisePhrase(text, setText)}
+                onClick={() => API(search, setText, setWelshText)}
+                className="Button"
+              >
+                Search
+              </Button>
+              <Button
+                variant="contained"
+                color="secondary"
+                onClick={() => API(randomWords(), setText, setWelshText)}
+                className="Button"
               >
                 Random Phrase
               </Button>
             </div>
           </div>
           <div className="Section highlighted">
-            {getHighlightedText(text, true)}
-            <span className="english">
-              {getHighlightedText(phrases[text] || "", false)}
-            </span>
+            <div>
+              {getHighlightedText(welshText, true)}
+              {"  -  "}
+              <VowelPercentage string={welshText} isWelsh />
+            </div>
+            <div className="english">
+              {getHighlightedText(text || "", false)}
+              {"  -  "}
+              <VowelPercentage string={text} />
+            </div>
           </div>
         </div>
       </header>

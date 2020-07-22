@@ -4,26 +4,30 @@ import TextField from "@material-ui/core/TextField";
 
 import "./App.css";
 
-const phrases = [
-  "Bore da",
-  "Prynhawn da",
-  "Noswaith dda",
-  "Nos da",
-  "Helô",
-  "Sut mae?",
-  "Croeso",
-  "Mae'n bwrw glaw"
-];
+const phrases = {
+  "Bore da": "Good morning",
+  "Prynhawn da": "Good afternoon",
+  "Noswaith dda": "Good evening",
+  "Nos da": "Good night",
+  Helô: "Hello",
+  "Sut mae?": "How are you?",
+  Croeso: "Welcome",
+  "Mae'n bwrw glaw": "It's raining"
+};
 
-const getHighlightedText = text => {
+const getHighlightedText = (text, isWelsh) => {
   // Split text on highlight term, include term itself into parts, ignore case
-  const vowels = ["a", "e", "i", "o", "ô", "u", "w", "y", "'"];
-  const parts = text.split(new RegExp(`(a|e|i|o|ô|u|w|y|')`, "gi"));
+  const vowels = isWelsh
+    ? ["a", "e", "i", "o", "ô", "u", "w", "y", "'"]
+    : ["a", "e", "i", "o", "u", "'"];
+  const parts = isWelsh
+    ? text.split(new RegExp(`(a|e|i|o|ô|u|w|y|')`, "gi"))
+    : text.split(new RegExp(`(a|e|i|o|u|')`, "gi"));
   return (
     <span>
       {parts.map(part =>
         vowels.includes(part.toLowerCase()) ? (
-          <span className="Vowel">{part}</span>
+          <span className={`Vowel-${isWelsh}`}>{part}</span>
         ) : (
           part
         )
@@ -32,18 +36,23 @@ const getHighlightedText = text => {
   );
 };
 
+var randomProperty = function() {
+  var keys = Object.keys(phrases);
+  return keys[(keys.length * Math.random()) << 0];
+};
+
 const randomisePhrase = (text, setText) => {
   let oldText = text;
   let newText = text;
   while (newText === oldText) {
-    newText = phrases[Math.floor(Math.random() * phrases.length)];
+    newText = randomProperty();
     console.log(newText);
   }
   setText(newText);
 };
 
 function App() {
-  const [text, setText] = useState("Croeso, sut mae?");
+  const [text, setText] = useState("Croeso");
   return (
     <div className="App">
       <header className="App-header">
@@ -66,7 +75,12 @@ function App() {
               </Button>
             </div>
           </div>
-          <div className="Section">{getHighlightedText(text)}</div>
+          <div className="Section highlighted">
+            {getHighlightedText(text, true)}
+            <span className="english">
+              {getHighlightedText(phrases[text] || "", false)}
+            </span>
+          </div>
         </div>
       </header>
     </div>

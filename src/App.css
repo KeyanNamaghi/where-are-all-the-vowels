@@ -14,7 +14,7 @@
 }
 
 .App-header {
-  background-color: #282c34;
+  background-color: #212121;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -28,11 +28,39 @@
   color: #61dafb;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+.Container {
+  display: flex;
+  justify-content: space-evenly;
+  min-width: 100%;
+  align-items: center;
+}
+
+.Section {
+  flex: auto;
+  padding: 20px;
+  width: 50%;
+}
+
+@media (max-width: 960px) {
+  .Container {
+    display: block;
   }
-  to {
-    transform: rotate(360deg);
+  .Section {
+    width: 100%;
+    padding: 20px 0px;
   }
+}
+
+.Inputs {
+  display: flex;
+  justify-content: center;
+}
+
+.TextField.TextField {
+  margin-right: 10px;
+  width: 50%;
+}
+
+.Vowel {
+  color: lightcoral;
 }

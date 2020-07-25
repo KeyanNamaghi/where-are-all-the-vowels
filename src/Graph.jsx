@@ -6,11 +6,11 @@ const MyResponsiveLine = ({ data /* see data tab */ }) => (
     data={data}
     margin={{ top: 50, right: 160, bottom: 50, left: 60 }}
     xScale={{ type: "linear" }}
-    yScale={{ type: "linear", min: 0, max: 2500 }}
+    yScale={{ type: "linear", min: 0, max: 100 }}
     curve="monotoneX"
     axisTop={null}
     axisRight={{
-      tickValues: [0, 500, 1000, 1500, 2000, 2500],
+      tickValues: [0, 20, 40, 60, 80, 100],
       tickSize: 5,
       tickPadding: 5,
       tickRotation: 0,
@@ -18,18 +18,8 @@ const MyResponsiveLine = ({ data /* see data tab */ }) => (
       legend: "",
       legendOffset: 0
     }}
-    axisBottom={{
-      tickValues: [0, 20, 40, 60, 80, 100, 120],
-      tickSize: 5,
-      tickPadding: 5,
-      tickRotation: 0,
-      format: ".2f",
-      legend: "",
-      legendOffset: 36,
-      legendPosition: "middle"
-    }}
     axisLeft={{
-      tickValues: [0, 500, 1000, 1500, 2000, 2500],
+      tickValues: [0, 20, 40, 60, 80, 100],
       tickSize: 5,
       tickPadding: 5,
       tickRotation: 0,
@@ -39,7 +29,7 @@ const MyResponsiveLine = ({ data /* see data tab */ }) => (
       legendPosition: "middle"
     }}
     enableGridX={false}
-    colors={{ scheme: "spectral" }}
+    colors={["#ffffff", "#f00000"]}
     lineWidth={1}
     pointSize={4}
     pointColor={{ theme: "background" }}
@@ -50,10 +40,11 @@ const MyResponsiveLine = ({ data /* see data tab */ }) => (
     pointLabelYOffset={-12}
     useMesh={true}
     gridXValues={[0, 20, 40, 60, 80, 100, 120]}
-    gridYValues={[0, 500, 1000, 1500, 2000, 2500]}
+    gridYValues={[]}
     legends={[
       {
-        anchor: "bottom-right",
+        itemTextColor: "#ffffff",
+        anchor: "right",
         direction: "column",
         justify: false,
         translateX: 140,

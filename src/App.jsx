@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import randomWords from "random-words";
@@ -46,16 +46,42 @@ const getHighlightedText = (text, isWelsh) => {
   );
 };
 
+const averageFromData = data => {
+  let total = 0;
+  for (let entry of data) {
+    total += entry.y;
+  }
+  total /= data.length;
+  return Math.round(total * 1e2) / 1e2;
+};
+
 function App() {
   const [search, setSearch] = useState("Welcome");
   const [text, setText] = useState("Welcome");
   const [welshText, setWelshText] = useState("Croeso");
-  const [data1, setdata1] = useState([
-    {
-      x: 0,
-      y: 10
-    }
-  ]);
+  const [dataEnglish, setDataEnglish] = useState([]);
+  const [dataWelsh, setDataWelsh] = useState([]);
+
+  useEffect(() => {
+    console.log("text");
+    setDataEnglish(
+      dataEnglish.concat([
+        {
+          x: dataEnglish.length,
+          y: VowelPercentage({ string: text, isWelsh: false })
+        }
+      ])
+    );
+    setDataWelsh(
+      dataWelsh.concat([
+        {
+          x: dataWelsh.length,
+          y: VowelPercentage({ string: welshText, isWelsh: true })
+        }
+      ])
+    );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [text]);
 
   return (
     <div className="App">
@@ -81,27 +107,12 @@ function App() {
               <Button
                 variant="contained"
                 color="secondary"
-                onClick={() => API(randomWords(), setText, setWelshText)}
+                onClick={() => {
+                  API(randomWords(), setText, setWelshText);
+                }}
                 className="Button"
               >
                 Random Phrase
-              </Button>
-              <Button
-                variant="contained"
-                color="secondary"
-                onClick={() =>
-                  setdata1(
-                    data1.concat([
-                      {
-                        x: 10,
-                        y: 220
-                      }
-                    ])
-                  )
-                }
-                className="Button"
-              >
-                Random plot
               </Button>
             </div>
           </div>
@@ -110,38 +121,47 @@ function App() {
               {getHighlightedText(welshText, true)}
               {"  -  "}
               <VowelPercentage string={welshText} isWelsh />
+              {"%"}
             </div>
             <div className="english">
               {getHighlightedText(text || "", false)}
               {"  -  "}
               <VowelPercentage string={text} />
+              {"%"}
             </div>
           </div>
         </div>
-        <div style={{ height: 200, width: "100%" }}>
+        <div
+          style={{
+            height: 300,
+            width: "100%",
+            color: "black",
+            fontSize: "12px"
+          }}
+        >
           <Graph
             data={[
               {
-                id: "Japan",
-                color: "hsl(104, 70%, 50%)",
-                data: data1
+                id: "English",
+                data: dataEnglish
               },
               {
-                id: "Kenya",
-                color: "hsl(124, 70%, 50%)",
-                data: [
-                  {
-                    x: 0,
-                    y: 300
-                  },
-                  {
-                    x: 10,
-                    y: 2000
-                  }
-                ]
+                id: "Welsh",
+                data: dataWelsh
               }
             ]}
           />
+        </div>
+        <div
+          style={{
+            fontSize: "12px"
+          }}
+        >
+          <p>
+            Using {dataEnglish.length} word{dataEnglish.length > 1 ? "s" : ""}:
+          </p>
+          <p>English average: {averageFromData(dataEnglish)}%</p>
+          <p>Welsh average: {averageFromData(dataWelsh)}%</p>
         </div>
       </header>
     </div>

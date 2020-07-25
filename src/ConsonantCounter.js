@@ -44,8 +44,7 @@ const VowelPercentage = ({ string, isWelsh }) => {
   }
   return (
     Math.round(((100 * countVowels) / (countVowels + countConsonants)) * 1e2) /
-      1e2 +
-    "%"
+    1e2
   );
 };
 

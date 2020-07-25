@@ -14,7 +14,7 @@ const API = (word, setText, setWelshText) => {
   url += `&source=${fromLang}`;
   url += `&target=${toLang}`;
 
-  if (word.length < 100) {
+  if (word.length < 100 && word.length > 0) {
     fetch(`${CACHING_SERVER}/search?word=${word.toLowerCase()}`, {
       method: "GET",
       headers: {

@@ -6,11 +6,9 @@ function capitalizeFirstLetter(string) {
 
 const API = (word, setText, setWelshText) => {
   const API_KEY = process.env.REACT_APP_GOOGLE_API_KEY;
-  console.log(process.env);
   let fromLang = "en";
   let toLang = "cy";
 
-  console.log(API_KEY);
   let url = `https://translation.googleapis.com/language/translate/v2?key=${API_KEY}`;
   url += "&q=" + encodeURI(word);
   url += `&source=${fromLang}`;
@@ -29,8 +27,6 @@ const API = (word, setText, setWelshText) => {
         capitalizeFirstLetter(response.data.translations[0].translatedText)
       );
       setText(capitalizeFirstLetter(word));
-      // setText();
-      console.log("response from google: ", response);
     })
     .catch(error => {
       console.log("There was an error with the translation request: ", error);

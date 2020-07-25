@@ -4,6 +4,7 @@ import TextField from "@material-ui/core/TextField";
 import randomWords from "random-words";
 import VowelPercentage from "./ConsonantCounter";
 import API from "./Translate";
+import Graph from "./Graph";
 
 import "./App.css";
 
@@ -49,6 +50,12 @@ function App() {
   const [search, setSearch] = useState("Welcome");
   const [text, setText] = useState("Welcome");
   const [welshText, setWelshText] = useState("Croeso");
+  const [data1, setdata1] = useState([
+    {
+      x: 0,
+      y: 10
+    }
+  ]);
 
   return (
     <div className="App">
@@ -79,6 +86,23 @@ function App() {
               >
                 Random Phrase
               </Button>
+              <Button
+                variant="contained"
+                color="secondary"
+                onClick={() =>
+                  setdata1(
+                    data1.concat([
+                      {
+                        x: 10,
+                        y: 220
+                      }
+                    ])
+                  )
+                }
+                className="Button"
+              >
+                Random plot
+              </Button>
             </div>
           </div>
           <div className="Section highlighted">
@@ -93,6 +117,31 @@ function App() {
               <VowelPercentage string={text} />
             </div>
           </div>
+        </div>
+        <div style={{ height: 200, width: "100%" }}>
+          <Graph
+            data={[
+              {
+                id: "Japan",
+                color: "hsl(104, 70%, 50%)",
+                data: data1
+              },
+              {
+                id: "Kenya",
+                color: "hsl(124, 70%, 50%)",
+                data: [
+                  {
+                    x: 0,
+                    y: 300
+                  },
+                  {
+                    x: 10,
+                    y: 2000
+                  }
+                ]
+              }
+            ]}
+          />
         </div>
       </header>
     </div>

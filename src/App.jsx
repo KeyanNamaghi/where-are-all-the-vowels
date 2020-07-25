@@ -112,7 +112,7 @@ function App() {
                 }}
                 className="Button"
               >
-                Random Phrase
+                Random Word
               </Button>
             </div>
           </div>

@@ -62,8 +62,13 @@ function App() {
   const [dataEnglish, setDataEnglish] = useState([]);
   const [dataWelsh, setDataWelsh] = useState([]);
 
+  const handleKeyDown = event => {
+    if (event.key === "Enter") {
+      API(search, setText, setWelshText);
+    }
+  };
+
   useEffect(() => {
-    console.log("text");
     setDataEnglish(
       dataEnglish.concat([
         {
@@ -95,6 +100,7 @@ function App() {
                 className="TextField"
                 onChange={event => setSearch(event.target.value)}
                 value={search}
+                onKeyDown={handleKeyDown}
               />
               <Button
                 variant="contained"

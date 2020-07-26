@@ -25,8 +25,7 @@ const API = (word, setText, setWelshText) => {
       res
         .json()
         .then(response => {
-          console.log("Checking caching server");
-          console.log(response);
+          console.log("Checking caching server: " + response);
           if (response !== null) {
             setWelshText(capitalizeFirstLetter(response[word.toLowerCase()]));
             setText(capitalizeFirstLetter(word));

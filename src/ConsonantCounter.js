@@ -28,7 +28,25 @@ const VowelPercentage = ({ string, isWelsh }) => {
   const doubleConsonants = isWelsh
     ? ["ch", "dd", "ff", "ng", "ll", "ph", "rh", "th"]
     : [];
-  const vowels = ["a", "e", "i", "o", "u", "w", "y"];
+  const vowels = isWelsh
+    ? [
+        "a",
+        "â",
+        "e",
+        "ê",
+        "i",
+        "î",
+        "o",
+        "ô",
+        "u",
+        "û",
+        "w",
+        "ŵ",
+        "y",
+        "ŷ",
+        "'"
+      ]
+    : ["a", "e", "i", "o", "u", "'"];
   let countConsonants = 0;
   let countVowels = 0;
 

@@ -24,7 +24,7 @@ const MyResponsiveLine = ({ data /* see data tab */ }) => (
       tickPadding: 5,
       tickRotation: 0,
       format: ".2s",
-      legend: "volume",
+      legend: "percentage",
       legendOffset: -40,
       legendPosition: "middle"
     }}
